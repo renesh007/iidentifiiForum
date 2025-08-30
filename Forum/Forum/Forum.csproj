@@ -18,9 +18,9 @@
 
   <ItemGroup>
     <Folder Include="DTO\Comment\" />
+    <Folder Include="DTO\Post\Response\" />
     <Folder Include="DTO\Tag\" />
     <Folder Include="DTO\User\" />
-    <Folder Include="DTO\Post\" />
     <Folder Include="Middleware\" />
   </ItemGroup>
 
