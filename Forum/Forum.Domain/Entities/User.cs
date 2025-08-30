@@ -6,6 +6,6 @@
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Name { get; set; }
-        public int UserTypeId { get; set; }
+        public string UserType { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Forum.Application.DTO;
 using Forum.Application.Interfaces;
 using Forum.Domain.Entities;
+using Forum.Domain.Exceptions;
 using Forum.Domain.Interfaces.Repository;
 using Forum.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
@@ -20,21 +21,66 @@ namespace Forum.Application.Handlers
         }
 
         ///<inheritdoc/>    
-        public Task<LoginResponse> LoginUserAsync(string email, string password, CancellationToken ct)
+        public async Task<LoginResponse> LoginUserAsync(string email, string password, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            User user = await _userRepository.GetUserByEmailAsync(email, ct);
+
+            if (user == null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            PasswordVerificationResult passwordVerificationResult = _hasher.VerifyHashedPassword(user, user.PasswordHash, password);
+
+            if (passwordVerificationResult == PasswordVerificationResult.Failed)
+            {
+                throw new UnauthorizedAccessException("Invalid username or password.");
+            }
+
+            string token = _tokenService.GenerateToken(user.Id, user.UserType);
+
+            return new LoginResponse
+            {
+                Token = token,
+            };
         }
 
         ///<inheritdoc/>
-        public Task<Guid> RegisterUserAsync(string name, string email, string password, CancellationToken ct)
+        public async Task<Guid> RegisterUserAsync(string name, string email, string password, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            User user = await _userRepository.GetUserByEmailAsync(email, ct);
+
+            if (user != null)
+            {
+                throw new EmailAlreadyExistsException();
+            }
+
+            User newUser = new User
+            {
+                Id = Guid.NewGuid(),
+                Name = name,
+                Email = email,
+                UserType = "User"
+            };
+
+            newUser.PasswordHash = _hasher.HashPassword(newUser, password);
+
+            Guid userId = await _userRepository.RegisterUserAsync(newUser, ct);
+
+            return userId;
         }
 
         ///<inheritdoc/>
-        public Task UpdateUserRoleAsync(Guid userId, CancellationToken ct)
+        public async Task UpdateUserRoleAsync(Guid userId, int newUserTypeId, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            User? user = await _userRepository.GetUserByIdAsync(userId, ct);
+
+            if (user == null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            await _userRepository.UpdateUserRoleAsync(userId, newUserTypeId, ct);
         }
     }
 }
