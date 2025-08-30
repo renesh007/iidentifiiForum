@@ -1,4 +1,4 @@
-﻿namespace Forum.Domain.Interfaces
+﻿namespace Forum.Domain.Interfaces.Repository
 {
     public interface ILikeRepository
     {
