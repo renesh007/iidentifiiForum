@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Forum.Domain\Forum.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Security\" />
+  </ItemGroup>
+
 </Project>
