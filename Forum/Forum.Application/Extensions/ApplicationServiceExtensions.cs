@@ -1,5 +1,7 @@
 ﻿using Forum.Application.Handlers;
 using Forum.Application.Interfaces;
+using Forum.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -10,6 +12,7 @@ namespace Forum.Application.Extensions
         static public IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.TryAddScoped<IUserHandler, UserHandler>();
+            services.TryAddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             return services;
         }
     }

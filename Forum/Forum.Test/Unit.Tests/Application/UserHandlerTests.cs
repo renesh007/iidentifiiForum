@@ -90,7 +90,7 @@ namespace Forum.Test.Unit.Tests.Application
                            .Returns(PasswordVerificationResult.Failed);
 
             // Act & Assert
-            Assert.ThrowsAsync<UnauthorizedAccessException>(() =>
+            Assert.ThrowsAsync<InvalidCredentialsException>(() =>
                 _handler.LoginUserAsync(email, password, CancellationToken.None));
         }
 
@@ -98,13 +98,14 @@ namespace Forum.Test.Unit.Tests.Application
         public async Task GivenNewUser_WhenRegisterUserAsync_ThenReturnsUserId()
         {
             // Arrange
-            _userRepository.GetUserByEmailAsync("new@example.com", Arg.Any<CancellationToken>())
+            _userRepository.GetUserByEmailOrName("new@example.com", "New User", Arg.Any<CancellationToken>())
                            .Returns(Task.FromResult<User>(null));
 
-            _passwordHasher.HashPassword(null, "password").Returns("hashedPassword");
+            _passwordHasher.HashPassword(Arg.Any<User>(), Arg.Any<string>())
+                           .Returns("hashedPassword");
 
             _userRepository.RegisterUserAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
-                         .Returns(ci => ((User)ci[0]).Id);
+                          .Returns(ci => ((User)ci[0]).Id);
 
             // Act
             Guid userId = await _handler.RegisterUserAsync("New User", "new@example.com", "password", CancellationToken.None);
@@ -115,16 +116,41 @@ namespace Forum.Test.Unit.Tests.Application
         }
 
         [Test]
-        public void GivenExistingUser_WhenRegisterUserAsync_ThenThrowsException()
+        public void GivenExistingUserEmail_WhenRegisterUserAsync_ThenThrowsEmailAlreadyExistsException()
         {
             // Arrange
-            User existingUser = new User { Id = Guid.NewGuid(), Email = "existing@example.com" };
-            _userRepository.GetUserByEmailAsync(existingUser.Email, Arg.Any<CancellationToken>())
+            User existingUser = new User
+            {
+                Id = Guid.NewGuid(),
+                Email = "existing@example.com",
+                Name = "OtherName" // Different to test email conflict
+            };
+
+            _userRepository.GetUserByEmailOrName(existingUser.Email, Arg.Any<string>(), Arg.Any<CancellationToken>())
                            .Returns(Task.FromResult(existingUser));
 
             // Act & Assert
-            Assert.ThrowsAsync<EmailAlreadyExistsException>(() =>
-                _handler.RegisterUserAsync("Name", existingUser.Email, "password", CancellationToken.None));
+            Assert.ThrowsAsync<EmailAlreadyExistsException>(async () =>
+                await _handler.RegisterUserAsync("NewUserName", existingUser.Email, "password", CancellationToken.None));
+        }
+
+        [Test]
+        public void GivenExistingUserName_WhenRegisterUserAsync_ThenThrowsUsernameAlreadyExistsException()
+        {
+            // Arrange
+            User existingUser = new User
+            {
+                Id = Guid.NewGuid(),
+                Email = "other@example.com",
+                Name = "existingUsername" // Conflict on username
+            };
+
+            _userRepository.GetUserByEmailOrName(Arg.Any<string>(), existingUser.Name, Arg.Any<CancellationToken>())
+                           .Returns(Task.FromResult(existingUser));
+
+            // Act & Assert
+            Assert.ThrowsAsync<UsernameAlreadyExistsException>(async () =>
+                await _handler.RegisterUserAsync(existingUser.Name, "new@example.com", "password", CancellationToken.None));
         }
 
         [Test]

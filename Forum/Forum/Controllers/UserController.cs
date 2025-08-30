@@ -32,13 +32,13 @@ namespace Forum.Controllers
             return Ok(response);
         }
 
-        [HttpPost("role")]
+        [HttpPatch("role")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateUserRoleAsync([FromBody] UpdateUserRoleRequest request, CancellationToken ct)
         {
             await _userHandler.UpdateUserRoleAsync(request.UserId, request.UserTypeId, ct);
 
-            return Ok();
+            return NoContent();
         }
 
     }

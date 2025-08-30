@@ -46,6 +46,11 @@ namespace Forum.Middleware
                     message = exception.Message;
                     break;
 
+                case InvalidCredentialsException:
+                    statusCode = HttpStatusCode.Unauthorized;
+                    message = exception.Message;
+                    break;
+
                 case UsernameAlreadyExistsException:
                     statusCode = HttpStatusCode.BadRequest;
                     message = exception.Message;

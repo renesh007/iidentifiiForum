@@ -34,7 +34,7 @@ namespace Forum.Application.Handlers
 
             if (passwordVerificationResult == PasswordVerificationResult.Failed)
             {
-                throw new UnauthorizedAccessException("Invalid username or password.");
+                throw new InvalidCredentialsException();
             }
 
             string token = _tokenService.GenerateToken(user.Id, user.UserType);
@@ -50,13 +50,12 @@ namespace Forum.Application.Handlers
         {
             User user = await _userRepository.GetUserByEmailOrName(email, name, ct);
 
-            if (user.Email == email)
+            if (user != null)
             {
-                throw new EmailAlreadyExistsException();
-            }
-            if (user.Name == name)
-            {
-                throw new UsernameAlreadyExistsException();
+                if (user.Email == email)
+                    throw new EmailAlreadyExistsException();
+                if (user.Name == name)
+                    throw new UsernameAlreadyExistsException();
             }
 
             User newUser = new User

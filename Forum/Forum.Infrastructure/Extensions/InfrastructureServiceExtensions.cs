@@ -1,4 +1,6 @@
-﻿using Forum.Domain.Interfaces.Services;
+﻿using Forum.Domain.Interfaces.Repository;
+using Forum.Domain.Interfaces.Services;
+using Forum.Infrastructure.Repositories;
 using Forum.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +36,9 @@ namespace Forum.Infrastructure.Extensions
                 });
 
             services.TryAddScoped<ITokenService, JwtTokenService>();
+            services.TryAddScoped<IDbConnectionFactory, DbConnectionFactory>();
+            services.TryAddScoped<IUserRepository, UserRepository>();
+
             return services;
         }
     }
