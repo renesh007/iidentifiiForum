@@ -1,7 +1,7 @@
 ﻿using Forum.Application.DTO;
+using Forum.Application.Exceptions;
 using Forum.Application.Interfaces;
 using Forum.Domain.Entities;
-using Forum.Domain.Exceptions;
 using Forum.Domain.Interfaces.Repository;
 using Forum.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
@@ -48,11 +48,15 @@ namespace Forum.Application.Handlers
         ///<inheritdoc/>
         public async Task<Guid> RegisterUserAsync(string name, string email, string password, CancellationToken ct)
         {
-            User user = await _userRepository.GetUserByEmailAsync(email, ct);
+            User user = await _userRepository.GetUserByEmailOrName(email, name, ct);
 
-            if (user != null)
+            if (user.Email == email)
             {
                 throw new EmailAlreadyExistsException();
+            }
+            if (user.Name == name)
+            {
+                throw new UsernameAlreadyExistsException();
             }
 
             User newUser = new User

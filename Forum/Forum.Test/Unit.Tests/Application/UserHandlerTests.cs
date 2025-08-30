@@ -1,6 +1,6 @@
-﻿using Forum.Application.Handlers;
+﻿using Forum.Application.Exceptions;
+using Forum.Application.Handlers;
 using Forum.Domain.Entities;
-using Forum.Domain.Exceptions;
 using Forum.Domain.Interfaces.Repository;
 using Forum.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;

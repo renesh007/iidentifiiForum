@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Forum.Application.Exceptions;
+using System.Net;
 using System.Text.Json;
 
 namespace Forum.Middleware
@@ -32,6 +33,24 @@ namespace Forum.Middleware
         {
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
             string message = "An unexpected error occurred.";
+
+            switch (exception)
+            {
+                case UserNotFoundException:
+                    statusCode = HttpStatusCode.NotFound;
+                    message = exception.Message;
+                    break;
+
+                case EmailAlreadyExistsException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
+
+                case UsernameAlreadyExistsException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
+            }
 
             context.Response.StatusCode = (int)statusCode;
             context.Response.ContentType = "application/json";

@@ -22,6 +22,16 @@ namespace Forum.Domain.Interfaces.Repository
         Task<User> GetUserByEmailAsync(string email, CancellationToken ct);
 
         /// <summary>
+        /// Retrieves a user based on their email address or name.
+        /// </summary>
+        /// <param name="email">The email address of the user to retrieve.</param>
+        /// <param name="name">The name of the user to retrieve.</param>
+        /// <param name="ct">A <see cref="CancellationToken"/> that can be used to cancel the operation.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="User"/> object if
+        /// a matching user is found; otherwise, <see langword="null"/>.</returns>
+        Task<User> GetUserByEmailOrName(string email, string name, CancellationToken ct);
+
+        /// <summary>
         /// Retrieves a user by their unique identifier asynchronously.
         /// </summary>
         /// <param name="userId">The unique identifier of the user to retrieve.</param>
