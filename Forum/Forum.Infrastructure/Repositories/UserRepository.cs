@@ -26,9 +26,9 @@ namespace Forum.Infrastructure.Repositories
                         ut.Description AS UserType
                     FROM dbo.tb_User u
                     JOIN dbo.tb_UserType ut ON u.UserTypeID = ut.Id
-                    WHERE UPPER(u.Email) = UPPER(@Email)";
+                    WHERE u.Email = @Email";
 
-                var user = await connection.QuerySingleOrDefaultAsync<User>(new CommandDefinition(sql, new { Email = email }, cancellationToken: ct));
+                User? user = await connection.QueryFirstOrDefaultAsync<User>(new CommandDefinition(sql, new { Email = email }, cancellationToken: ct));
 
                 return user;
             }
@@ -47,10 +47,10 @@ namespace Forum.Infrastructure.Repositories
                         ut.Description AS UserType
                     FROM dbo.tb_User u
                     JOIN dbo.tb_UserType ut ON u.UserTypeID = ut.Id
-                    WHERE UPPER(u.Email) = UPPER(@Email)
-                    OR UPPER(u.Name) = UPPER(@Name)";
+                    WHERE u.Email = @Email
+                    OR u.Name = @Name";
 
-                var user = await connection.QuerySingleOrDefaultAsync<User>(new CommandDefinition(sql, new { Email = email, Name = name }, cancellationToken: ct));
+                User? user = await connection.QueryFirstOrDefaultAsync<User>(new CommandDefinition(sql, new { Email = email, Name = name }, cancellationToken: ct));
 
                 return user;
             }
@@ -71,7 +71,7 @@ namespace Forum.Infrastructure.Repositories
                     JOIN dbo.tb_UserType ut ON u.UserTypeID = ut.Id
                     WHERE u.Id = @UserId";
 
-                var user = await connection.QuerySingleOrDefaultAsync<User>(new CommandDefinition(sql, new { UserId = userId }, cancellationToken: ct));
+                User? user = await connection.QueryFirstOrDefaultAsync<User>(new CommandDefinition(sql, new { UserId = userId }, cancellationToken: ct));
 
                 return user;
             }
@@ -81,7 +81,7 @@ namespace Forum.Infrastructure.Repositories
         {
             using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
             {
-                var sql = @"
+                string sql = @"
                     INSERT INTO dbo.tb_User (Id, Name, Email, PasswordHash, UserTypeId)
                     VALUES (@Id, @Name, @Email, @PasswordHash, 
                     (SELECT Id FROM dbo.tb_UserType WHERE Description = @UserType));";
@@ -105,7 +105,7 @@ namespace Forum.Infrastructure.Repositories
         {
             using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
             {
-                var sql = @"
+                string sql = @"
                     UPDATE dbo.tb_User
                     SET UserTypeId = @NewUserTypeId
                     WHERE Id = @Id;";

@@ -13,6 +13,7 @@ namespace Forum.Application.Handlers
         private readonly IUserRepository _userRepository;
         private readonly ITokenService _tokenService;
         private readonly IPasswordHasher<User> _hasher;
+        private const string DEFAULT_USER = "User";
         public UserHandler(IUserRepository userRepository, ITokenService tokenService, IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
@@ -61,9 +62,9 @@ namespace Forum.Application.Handlers
             User newUser = new User
             {
                 Id = Guid.NewGuid(),
-                Name = name,
-                Email = email,
-                UserType = "User"
+                Name = name.ToLower(),
+                Email = email.ToLower(),
+                UserType = DEFAULT_USER
             };
 
             newUser.PasswordHash = _hasher.HashPassword(newUser, password);
