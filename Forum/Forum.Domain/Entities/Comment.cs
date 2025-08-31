@@ -2,10 +2,10 @@
 {
     public class Comment
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public string Content { get; set; } = string.Empty;
+        public Guid Id { get; set; }
+        public string Content { get; set; }
         public DateTime CreatedOn { get; set; }
-        public string CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
         public Guid PostId { get; set; }
     }
 }

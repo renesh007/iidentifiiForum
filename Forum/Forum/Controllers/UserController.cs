@@ -17,6 +17,7 @@ namespace Forum.Controllers
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<ActionResult> RegisterUserAsync([FromBody] RegisterRequest registerRequest, CancellationToken ct)
         {
             Guid userId = await _userHandler.RegisterUserAsync(registerRequest.Name, registerRequest.Email, registerRequest.Password, ct);
