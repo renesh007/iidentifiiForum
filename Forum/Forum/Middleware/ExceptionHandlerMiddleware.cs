@@ -51,6 +51,11 @@ namespace Forum.Middleware
                     message = exception.Message;
                     break;
 
+                case PostNotFoundException:
+                    statusCode = HttpStatusCode.NotFound;
+                    message = exception.Message;
+                    break;
+
                 case UsernameAlreadyExistsException:
                     statusCode = HttpStatusCode.BadRequest;
                     message = exception.Message;

@@ -174,7 +174,7 @@ namespace Forum.Test.Unit.Tests.Application
         public void GivenNonexistentUser_WhenUpdateUserRoleAsync_ThenThrowsException()
         {
             // Arrange
-            var userId = Guid.NewGuid();
+            Guid userId = Guid.NewGuid();
             _userRepository.GetUserByIdAsync(userId, Arg.Any<CancellationToken>())
                            .Returns(Task.FromResult<User>(null));
 

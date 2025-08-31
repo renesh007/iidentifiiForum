@@ -7,12 +7,13 @@ namespace Forum.Domain.Interfaces.Repository
         /// <summary>
         /// Creates a new entity with the specified title, content, and associated user ID.
         /// </summary>
+        /// <param name="postId">The unique identifier of the post to create.</param>
         /// <param name="title">The title of the entity to create. Cannot be null or empty.</param>
         /// <param name="content">The content of the entity to create. Cannot be null or empty.</param>
         /// <param name="userId">The unique identifier of the user associated with the entity.</param>
         /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
         /// <returns>A <see cref="Guid"/> representing the unique identifier of the newly created entity.</returns>
-        public Task<Guid> CreateAsync(string title, string content, Guid userId, CancellationToken cancellationToken);
+        public Task<Guid> CreateAsync(Guid postId, string title, string content, Guid userId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a post by its unique identifier.
