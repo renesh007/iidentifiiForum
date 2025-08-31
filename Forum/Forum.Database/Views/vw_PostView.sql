@@ -1,9 +1,9 @@
 ﻿CREATE VIEW [dbo].[vw_PostView]
-	AS SELECT
+AS SELECT
     p.Id AS PostId,
     p.Title,
     p.Content,
-    p.CreatedOn AS CreatedAt,
+    p.CreatedOn,
     u.Name AS Author,
     ISNULL(l.TotalLikes, 0) AS TotalLikes,
     c.Id AS CommentId,

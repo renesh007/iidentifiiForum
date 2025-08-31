@@ -58,9 +58,9 @@ namespace Forum.Test.Unit.Tests.Application
                 CreatedOn = DateTime.UtcNow,
                 Author = "Author",
                 TotalLikes = 5,
-                Comments = new List<Comment>
+                Comments = new List<CommentView>
                 {
-                    new Comment { Id = Guid.NewGuid(), Content = "Comment 1", CreatedOn = DateTime.UtcNow, CreatedBy = "Commenter" }
+                    new CommentView { CommentId = Guid.NewGuid(), CommentContent = "Comment 1", CommentCreatedOn = DateTime.UtcNow, CommentAuthor = "commenter" }
                 },
                 Tags = new List<string> { "tag1", "tag2" }
             };

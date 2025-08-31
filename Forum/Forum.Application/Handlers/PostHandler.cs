@@ -29,29 +29,29 @@ namespace Forum.Application.Handlers
 
         public async Task<FullPostResponse> GetPostByIdAsync(Guid postId, CancellationToken cancellationToken)
         {
-            PostView? enrichedPost = await _viewPostRepository.GetFullPostByIdAsync(postId, cancellationToken);
+            PostView? postView = await _viewPostRepository.GetFullPostByIdAsync(postId, cancellationToken);
 
-            if (enrichedPost == null)
+            if (postView == null)
             {
                 throw new PostNotFoundException();
             }
 
             return new FullPostResponse
             {
-                PostId = enrichedPost.PostId,
-                Title = enrichedPost.Title,
-                Content = enrichedPost.Content,
-                CreatedAt = enrichedPost.CreatedAt,
-                Author = enrichedPost.Author,
-                TotalLikes = enrichedPost.TotalLikes,
-                Comments = enrichedPost.Comments.Select(c => new CommentResponse
+                PostId = postView.PostId,
+                Title = postView.Title,
+                Content = postView.Content,
+                CreatedOn = postView.CreatedOn,
+                Author = postView.Author,
+                TotalLikes = postView.TotalLikes,
+                Comments = postView.Comments.Select(c => new CommentResponse
                 {
-                    Id = c.Id,
-                    Content = c.Content,
-                    CreatedOn = c.CreatedOn,
-                    CreatedBy = c.CreatedBy
+                    Id = c.CommentId,
+                    Content = c.CommentContent,
+                    CreatedOn = c.CommentCreatedOn,
+                    CreatedBy = c.CommentAuthor
                 }).ToList(),
-                Tags = enrichedPost.Tags
+                Tags = postView.Tags
             };
         }
 
@@ -66,15 +66,15 @@ namespace Forum.Application.Handlers
                 PostId = p.PostId,
                 Title = p.Title,
                 Content = p.Content,
-                CreatedAt = p.CreatedAt,
+                CreatedOn = p.CreatedOn,
                 Author = p.Author,
                 TotalLikes = p.TotalLikes,
                 Comments = p.Comments.Select(c => new CommentResponse
                 {
-                    Id = c.Id,
-                    Content = c.Content,
-                    CreatedOn = c.CreatedOn,
-                    CreatedBy = c.CreatedBy
+                    Id = c.CommentId,
+                    Content = c.CommentContent,
+                    CreatedOn = c.CommentCreatedOn,
+                    CreatedBy = c.CommentAuthor
                 }).ToList(),
                 Tags = p.Tags
             }).ToList();
