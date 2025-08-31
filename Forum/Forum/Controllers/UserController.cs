@@ -36,9 +36,9 @@ namespace Forum.Controllers
 
         [HttpPatch("role")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UpdateUserRoleAsync([FromBody] UpdateUserRoleRequest request, CancellationToken ct)
+        public async Task<ActionResult> UpdateUserRoleAsync([FromBody] UpdateUserToModeratorRequest request, CancellationToken ct)
         {
-            await _userHandler.UpdateUserRoleAsync(request.UserId, request.UserTypeId, ct);
+            await _userHandler.UpdateUserToModeratorAsync(request.UserId, ct);
 
             return NoContent();
         }

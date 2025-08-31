@@ -5,5 +5,5 @@
     [Title] NVARCHAR(255) NOT NULL, 
     [Content] NVARCHAR(4000) NULL, 
     [CreatedOn] DATETIME2 NOT NULL CONSTRAINT DF_tb_Post_CreatedOn DEFAULT SYSUTCDATETIME(), 
-    CONSTRAINT [FK_tb_Post_tb_User] FOREIGN KEY ([UserId]) REFERENCES [tb_User]([id])    
+    CONSTRAINT [FK_tb_Post_tb_User] FOREIGN KEY ([UserId]) REFERENCES [tb_User]([Id])    
 )

@@ -8,6 +8,6 @@ namespace Forum.DTO.Tag
         public Guid PostId { get; set; }
 
         [Required]
-        public string TagType { get; set; } = string.Empty;
+        public string TagType { get; set; }
     }
 }

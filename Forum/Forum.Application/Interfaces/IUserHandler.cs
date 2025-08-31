@@ -25,14 +25,13 @@
         public Task<string> LoginUserAsync(string email, string password, CancellationToken ct);
 
         /// <summary>
-        /// Updates the role of a user to the specified user type.
+        /// Updates the role of a user to the Moderator user type.
         /// </summary>
         /// <remarks>This method updates the user's role based on the provided user type identifier.  Ensure that the
         /// <paramref name="newUserTypeId"/> corresponds to a valid user type in the system.</remarks>
         /// <param name="userId">The unique identifier of the user whose role is to be updated.</param>
-        /// <param name="newUserTypeId">The identifier of the new user type to assign to the user.</param>
         /// <param name="ct">A cancellation token that can be used to cancel the operation.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public Task UpdateUserRoleAsync(Guid userId, int newUserTypeId, CancellationToken ct);
+        public Task UpdateUserToModeratorAsync(Guid userId, CancellationToken ct);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Forum.DTO.User.Register
 {
-    public sealed class RegisterRequest
+    public class RegisterRequest
     {
         [Required]
         [EmailAddress]

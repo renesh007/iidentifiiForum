@@ -2,7 +2,7 @@
 
 namespace Forum.DTO.User.Login
 {
-    public sealed class LoginRequest
+    public class LoginRequest
     {
         [Required]
         [EmailAddress]

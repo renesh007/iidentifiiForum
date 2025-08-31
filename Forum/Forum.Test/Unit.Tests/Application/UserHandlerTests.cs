@@ -159,15 +159,16 @@ namespace Forum.Test.Unit.Tests.Application
             // Arrange
             Guid userId = Guid.NewGuid();
             User user = new User { Id = userId };
+            int ModratorRoleId = 2;
 
             _userRepository.GetUserByIdAsync(userId, Arg.Any<CancellationToken>())
                            .Returns(Task.FromResult(user));
 
             // Act
-            await _handler.UpdateUserRoleAsync(userId, 2, CancellationToken.None);
+            await _handler.UpdateUserToModeratorAsync(userId, CancellationToken.None);
 
             // Assert
-            await _userRepository.Received(1).UpdateUserRoleAsync(userId, 2, Arg.Any<CancellationToken>());
+            await _userRepository.Received(1).UpdateUserRoleAsync(userId, ModratorRoleId, Arg.Any<CancellationToken>());
         }
 
         [Test]
@@ -180,7 +181,7 @@ namespace Forum.Test.Unit.Tests.Application
 
             // Act & Assert
             Assert.ThrowsAsync<UserNotFoundException>(() =>
-                _handler.UpdateUserRoleAsync(userId, 2, CancellationToken.None));
+                _handler.UpdateUserToModeratorAsync(userId, CancellationToken.None));
         }
 
     }

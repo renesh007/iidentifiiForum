@@ -13,6 +13,9 @@ namespace Forum.Application.Handlers
         private readonly ITokenService _tokenService;
         private readonly IPasswordHasher<User> _hasher;
         private const string DEFAULT_USER = "User";
+        private const int MODRATOR_USER = 2;
+
+
         public UserHandler(IUserRepository userRepository, ITokenService tokenService, IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
@@ -71,7 +74,7 @@ namespace Forum.Application.Handlers
         }
 
         ///<inheritdoc/>
-        public async Task UpdateUserRoleAsync(Guid userId, int newUserTypeId, CancellationToken ct)
+        public async Task UpdateUserToModeratorAsync(Guid userId, CancellationToken ct)
         {
             User? user = await _userRepository.GetUserByIdAsync(userId, ct);
 
@@ -80,7 +83,7 @@ namespace Forum.Application.Handlers
                 throw new UserNotFoundException();
             }
 
-            await _userRepository.UpdateUserRoleAsync(userId, newUserTypeId, ct);
+            await _userRepository.UpdateUserRoleAsync(userId, MODRATOR_USER, ct);
         }
     }
 }
