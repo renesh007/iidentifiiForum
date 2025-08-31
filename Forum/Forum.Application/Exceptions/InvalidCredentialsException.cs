@@ -3,6 +3,6 @@
     public class InvalidCredentialsException : Exception
     {
         public InvalidCredentialsException()
-      : base("Invalid username or password.") { }
+        : base("Invalid username or password.") { }
     }
 }
