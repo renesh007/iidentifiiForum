@@ -55,6 +55,10 @@ namespace Forum.Middleware
                     statusCode = HttpStatusCode.NotFound;
                     message = exception.Message;
                     break;
+                case CannotLikeOwnPostException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
 
                 case UsernameAlreadyExistsException:
                     statusCode = HttpStatusCode.BadRequest;
