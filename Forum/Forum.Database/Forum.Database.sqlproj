@@ -9,8 +9,7 @@
     <ProjectGuid>{1ce0c750-df9d-4dbf-b444-375bf3828c97}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
+    <RootPath />
     <RootNamespace>Forum.Database</RootNamespace>
     <AssemblyName>Forum.Database</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
@@ -48,7 +47,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
@@ -58,10 +56,17 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Seed" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\tb_UserType.sql" />
     <Build Include="Tables\tb_User.sql" />
+    <Build Include="Tables\tb_Post.sql" />
+    <Build Include="Tables\tb_Comment.sql" />
+    <Build Include="Tables\tb_Like.sql" />
+    <Build Include="Tables\tb_Tag.sql" />
+    <Build Include="Tables\tb_PostTag.sql" />
+    <Build Include="Views\vw_PostView.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Forum.Database.publish.xml" />

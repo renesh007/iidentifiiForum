@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[tb_Comment]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [UserId] UNIQUEIDENTIFIER NOT NULL, 
+    [PostId] UNIQUEIDENTIFIER NOT NULL, 
+    [Content] NVARCHAR(1000) NOT NULL, 
+    [CreatedOn] DATETIME2 NOT NULL CONSTRAINT DF_tb_Comment_CreatedOn DEFAULT SYSUTCDATETIME(), 
+    CONSTRAINT [FK_tb_Comment_tb_User] FOREIGN KEY ([UserId]) REFERENCES [tb_User]([Id]), 
+    CONSTRAINT [FK_tb_Comment_tb_Post] FOREIGN KEY ([PostId]) REFERENCES [tb_Post]([Id])
+)

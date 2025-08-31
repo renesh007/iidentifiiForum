@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[tb_Post]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [UserId] UNIQUEIDENTIFIER NOT NULL, 
+    [Title] NVARCHAR(255) NOT NULL, 
+    [Content] NVARCHAR(4000) NULL, 
+    [CreatedOn] DATETIME2 NOT NULL CONSTRAINT DF_tb_Post_CreatedOn DEFAULT SYSUTCDATETIME(), 
+    CONSTRAINT [FK_tb_Post_tb_User] FOREIGN KEY ([UserId]) REFERENCES [tb_User]([id])    
+)
