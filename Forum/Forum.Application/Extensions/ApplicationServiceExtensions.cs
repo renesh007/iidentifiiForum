@@ -14,6 +14,8 @@ namespace Forum.Application.Extensions
             services.TryAddScoped<IUserHandler, UserHandler>();
             services.TryAddScoped<IPostHandler, PostHandler>();
             services.TryAddScoped<ILikeHandler, LikeHandler>();
+            services.TryAddScoped<ICommentHandler, CommentHandler>();
+            services.TryAddScoped<ITagHandler, TagHandler>();
             services.TryAddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             return services;
         }

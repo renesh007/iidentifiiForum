@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\Comment\" />
     <Folder Include="DTO\Post\Response\" />
     <Folder Include="DTO\Tag\" />
   </ItemGroup>
