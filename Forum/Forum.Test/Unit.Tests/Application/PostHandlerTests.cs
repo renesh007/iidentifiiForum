@@ -55,7 +55,7 @@ namespace Forum.Test.Unit.Tests.Application
                 PostId = postId,
                 Title = "My Post",
                 Content = "Content",
-                CreatedAt = DateTime.UtcNow,
+                CreatedOn = DateTime.UtcNow,
                 Author = "Author",
                 TotalLikes = 5,
                 Comments = new List<Comment>
@@ -109,10 +109,10 @@ namespace Forum.Test.Unit.Tests.Application
                     PostId = Guid.NewGuid(),
                     Title = "Post 1",
                     Content = "Content 1",
-                    CreatedAt = DateTime.UtcNow,
+                    CreatedOn = DateTime.UtcNow,
                     Author = "Author1",
                     TotalLikes = 2,
-                    Comments = new List<Comment>(),
+                    Comments = new List<CommentView>(),
                     Tags = new List<string>{"tag1"}
                 },
                 new PostView
@@ -120,10 +120,10 @@ namespace Forum.Test.Unit.Tests.Application
                     PostId = Guid.NewGuid(),
                     Title = "Post 2",
                     Content = "Content 2",
-                    CreatedAt = DateTime.UtcNow,
+                    CreatedOn = DateTime.UtcNow,
                     Author = "Author2",
                     TotalLikes = 3,
-                    Comments = new List<Comment>(),
+                    Comments = new List<CommentView>(),
                     Tags = new List<string>{"tag2"}
                  }
              };
