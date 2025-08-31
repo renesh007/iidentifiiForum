@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Forum.Infrastructure\Forum.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTO\Post\Response\" />
-  </ItemGroup>
-
 </Project>
