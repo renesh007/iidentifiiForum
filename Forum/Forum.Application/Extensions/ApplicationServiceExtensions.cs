@@ -13,6 +13,7 @@ namespace Forum.Application.Extensions
         {
             services.TryAddScoped<IUserHandler, UserHandler>();
             services.TryAddScoped<IPostHandler, PostHandler>();
+            services.TryAddScoped<ILikeHandler, LikeHandler>();
             services.TryAddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             return services;
         }
