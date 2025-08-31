@@ -41,6 +41,8 @@ namespace Forum.Infrastructure.Extensions
             services.TryAddScoped<IUserRepository, UserRepository>();
             services.TryAddScoped<IPostRepository, PostRepository>();
             services.TryAddScoped<IViewPostRepository, ViewPostRepository>();
+            services.TryAddScoped<ILikeRepository, LikeRepository>();
+
 
             return services;
         }
