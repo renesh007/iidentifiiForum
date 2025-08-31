@@ -60,3 +60,18 @@ BEGIN
     );
 END;
 GO
+
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM [dbo].[tb_Tag] WHERE [Name] = 'Misleading')
+    BEGIN
+        INSERT INTO [dbo].[tb_Tag] ([Name], [Description])
+        VALUES ('Misleading', 'Posts that contain information that is misleading or deceptive.');
+    END;
+
+    IF NOT EXISTS (SELECT 1 FROM [dbo].[tb_Tag] WHERE [Name] = 'False Information')
+    BEGIN
+        INSERT INTO [dbo].[tb_Tag] ([Name], [Description])
+        VALUES ('False Information', 'Posts that contain information proven to be false.');
+    END;
+END;
+GO
