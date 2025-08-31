@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="DTO\Post\Response\" />
-    <Folder Include="DTO\Tag\" />
   </ItemGroup>
 
 </Project>
