@@ -22,7 +22,6 @@
     <Folder Include="DTO\Comment\" />
     <Folder Include="DTO\Post\Response\" />
     <Folder Include="DTO\Tag\" />
-    <Folder Include="DTO\User\" />
   </ItemGroup>
 
 </Project>

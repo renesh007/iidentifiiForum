@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Forum.DTO.Post.Request
+namespace Forum.DTO.User
 {
     public sealed class UpdateUserRoleRequest
     {

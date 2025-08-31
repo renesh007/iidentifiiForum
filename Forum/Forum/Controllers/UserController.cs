@@ -1,6 +1,6 @@
 ﻿using Forum.Application.DTO;
 using Forum.Application.Interfaces;
-using Forum.DTO.Post.Request;
+using Forum.DTO.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
