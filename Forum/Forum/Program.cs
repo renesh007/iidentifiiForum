@@ -54,7 +54,8 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
         var response = new
         {
-            message = "Validation Failed",
+            Success = false,
+            Message = "Validation Failed",
             errors
         };
 

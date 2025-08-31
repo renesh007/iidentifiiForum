@@ -1,0 +1,555 @@
+{
+	"info": {
+		"_postman_id": "416227d5-c55d-4e46-9d58-02a03a093c27",
+		"name": "Forum API Integration Tests",
+		"description": "Integration tests for forum API covering posts, comments, likes, moderation, filtering, and user roles.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2945774"
+	},
+	"item": [
+		{
+			"name": "User Registration and Login",
+			"item": [
+				{
+					"name": "Register Regular User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"user1@example.com\", \"name\": \"User One\", \"password\": \"Password123!\"}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/User/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Regular User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Login successful\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.collectionVariables.set(\"userToken\", pm.response.json().token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"user1@example.com\", \"password\": \"Password123!\"}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/User/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register & Login Moderator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Moderator login successful\", function () {\r",
+									" pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"mod@example.com\", \"name\": \"Moderator\", \"password\": \"Mod123!\"}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/User/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Moderator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Moderator login successful\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.collectionVariables.set(\"moderatorToken\", pm.response.json().token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"moderator@example.com\", \"password\": \"mod123\"}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/User/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Admin login successful\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.collectionVariables.set(\"adminToken\", pm.response.json().token);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"admin@example.com\", \"password\": \"admin123\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/User/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User to Mod",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let adminToken = pm.collectionVariables.get(\"adminToken\");\r",
+									"\r",
+									"if (adminToken) {\r",
+									"    pm.request.headers.remove(\"Authorization\");\r",
+									"    pm.request.headers.add({\r",
+									"        key: \"Authorization\",\r",
+									"        value: \"Bearer \" + adminToken\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"9cbe0f8d-eeae-4a7c-877f-9921c4951e5a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/User/role",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"role"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Create Post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Post created successfully\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    let jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"postId\", jsonData.id || jsonData.postId);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"title\": \"My First Post\", \"content\": \"This is the content of the post.\"}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Post/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Post",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Posts (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/Post/posts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Post",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/Post/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Post",
+								"{{postId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Add Comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"postId\": \"{{postId}}\", \"content\": \"This is a second comment.\"}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Comment",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Comment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Likes",
+			"item": [
+				{
+					"name": "Like Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"postId\": \"{{postId}}\"}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Like",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Like"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Moderation",
+			"item": [
+				{
+					"name": "Tag Post as Misleading",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let moderatorToken = pm.collectionVariables.get(\"moderatorToken\");\r",
+									"\r",
+									"if (moderatorToken) {\r",
+									"    pm.request.headers.remove(\"Authorization\");\r",
+									"    pm.request.headers.add({\r",
+									"        key: \"Authorization\",\r",
+									"        value: \"Bearer \" + moderatorToken\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"postId\": \"{{postId}}\", \"tagType\": \"misleading\"}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Tag",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Tag"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"// Map request names or paths to token variables\r",
+					"const tokenMap = {\r",
+					"    \"/api/User/role\": \"adminToken\",           // Admin-only\r",
+					"    \"/api/Tag\": \"moderatorToken\",             // Moderator-only\r",
+					"    \"/api/Post/create\": \"userToken\",          // Regular user\r",
+					"    \"/api/Comment\": \"userToken\",              // Regular user\r",
+					"    \"/api/Like\": \"userToken\"                  // Regular user\r",
+					"};\r",
+					"\r",
+					"// Get the path of the current request\r",
+					"const requestPath = pm.request.url.getPath();\r",
+					"\r",
+					"// Find the token variable to use\r",
+					"let tokenVariable = null;\r",
+					"for (const path in tokenMap) {\r",
+					"    if (requestPath.startsWith(path)) {\r",
+					"        tokenVariable = tokenMap[path];\r",
+					"        break;\r",
+					"    }\r",
+					"}\r",
+					"\r",
+					"if (tokenVariable) {\r",
+					"    const token = pm.collectionVariables.get(tokenVariable);\r",
+					"    if (token) {\r",
+					"        pm.request.headers.remove(\"Authorization\"); // remove any existing header\r",
+					"        pm.request.headers.add({\r",
+					"            key: \"Authorization\",\r",
+					"            value: \"Bearer \" + token\r",
+					"        });\r",
+					"        console.log(`Using token variable: ${tokenVariable}`);\r",
+					"    } else {\r",
+					"        console.warn(`Token variable ${tokenVariable} is empty`);\r",
+					"    }\r",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:38488"
+		},
+		{
+			"key": "adminToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "moderatorToken",
+			"value": ""
+		},
+		{
+			"key": "userToken",
+			"value": ""
+		},
+		{
+			"key": "otherUserToken",
+			"value": ""
+		},
+		{
+			"key": "postId",
+			"value": ""
+		},
+		{
+			"key": "commentId",
+			"value": ""
+		}
+	]
+}

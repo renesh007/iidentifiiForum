@@ -64,6 +64,11 @@ namespace Forum.Middleware
                     statusCode = HttpStatusCode.BadRequest;
                     message = exception.Message;
                     break;
+
+                case TagNotFoundException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
             }
 
             context.Response.StatusCode = (int)statusCode;
