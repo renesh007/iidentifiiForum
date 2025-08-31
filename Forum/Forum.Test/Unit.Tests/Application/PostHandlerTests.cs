@@ -1,4 +1,5 @@
-﻿using Forum.Application.DTO.Post.Responses;
+﻿using Forum.Application.DTO.Post.Requests;
+using Forum.Application.DTO.Post.Responses;
 using Forum.Application.Exceptions;
 using Forum.Application.Handlers;
 using Forum.Domain.Entities;
@@ -93,8 +94,12 @@ namespace Forum.Test.Unit.Tests.Application
         public async Task GivenPostsExist_WhenGetPostsAsyncIsCalled_ThenShouldReturnPaginatedResponse()
         {
             // Arrange
-            int pageNumber = 1;
-            int pageSize = 2;
+            var getPostsQuery = new GetPostsQuery
+            {
+                PageNumber = 1,
+                PageSize = 2
+            };
+
             int totalCount = 5;
 
             List<PostView> postViews = new List<PostView>
@@ -120,20 +125,20 @@ namespace Forum.Test.Unit.Tests.Application
                     TotalLikes = 3,
                     Comments = new List<Comment>(),
                     Tags = new List<string>{"tag2"}
-                }
-            };
+                 }
+             };
 
             _viewPostRepository
-                .GetPostsAsync(pageNumber, pageSize, Arg.Any<FilterOptions?>(), Arg.Any<SortingDirection?>(), Arg.Any<SortingOptions?>(), _ct)
+                .GetPostsAsync(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<FilterOptions?>(), Arg.Any<SortingDirection?>(), Arg.Any<SortingOptions?>(), _ct)
                 .Returns(Task.FromResult((postViews.AsEnumerable(), totalCount)));
 
             // Act
-            var result = await _handler.GetPostsAsync(_ct, null, null, null, pageNumber, pageSize);
+            var result = await _handler.GetPostsAsync(getPostsQuery, _ct);
 
             // Assert
             Assert.AreEqual(2, result.Items.Count);
             Assert.AreEqual(totalCount, result.TotalItems);
-            Assert.AreEqual(pageNumber, result.PageNumber);
+            Assert.AreEqual(getPostsQuery.PageNumber, result.PageNumber);
             Assert.AreEqual(3, result.TotalPages);
             Assert.AreEqual("Post 1", result.Items.First().Title);
             Assert.AreEqual("Post 2", result.Items.Last().Title);
