@@ -12,6 +12,7 @@ namespace Forum.Application.Extensions
         static public IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.TryAddScoped<IUserHandler, UserHandler>();
+            services.TryAddScoped<IPostHandler, PostHandler>();
             services.TryAddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             return services;
         }

@@ -1,4 +1,5 @@
-﻿using Forum.Domain.Interfaces.Repository;
+﻿using Forum.Domain.Interfaces.Repositories;
+using Forum.Domain.Interfaces.Repository;
 using Forum.Domain.Interfaces.Services;
 using Forum.Infrastructure.Repositories;
 using Forum.Infrastructure.Services;
@@ -38,6 +39,8 @@ namespace Forum.Infrastructure.Extensions
             services.TryAddScoped<ITokenService, JwtTokenService>();
             services.TryAddScoped<IDbConnectionFactory, DbConnectionFactory>();
             services.TryAddScoped<IUserRepository, UserRepository>();
+            services.TryAddScoped<IPostRepository, PostRepository>();
+            services.TryAddScoped<IViewPostRepository, ViewPostRepository>();
 
             return services;
         }

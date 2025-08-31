@@ -6,7 +6,7 @@ namespace Forum.DTO.Post.Request
     public class QueryPostRequest
     {
         [Range(1, int.MaxValue, ErrorMessage = "Page must be greater than 0.")]
-        public int Page { get; set; } = 1;
+        public int PageNumber { get; set; } = 1;
 
         [Range(1, 100, ErrorMessage = "PageSize must be between 1 and 100.")]
         public int PageSize { get; set; } = 10;
@@ -23,7 +23,7 @@ namespace Forum.DTO.Post.Request
         [MaxLength(36, ErrorMessage = "Tag ID must be a valid string.")]
         public string? Tag { get; set; } = null;
 
-        [AllowedValues("DATE", "TITLE")]
+        [AllowedValues("DATE", "LIKE")]
         public string SortBy { get; set; } = "DATE";
 
         [AllowedValues("ASCENDING", "DESCENDING")]

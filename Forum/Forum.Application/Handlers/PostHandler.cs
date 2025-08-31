@@ -1,11 +1,12 @@
 ﻿using Forum.Application.DTO.Comment;
+using Forum.Application.DTO.Post.Requests;
 using Forum.Application.DTO.Post.Responses;
 using Forum.Application.Exceptions;
 using Forum.Application.Interfaces;
+using Forum.Application.Mappers;
 using Forum.Domain.Entities;
 using Forum.Domain.Interfaces.Repositories;
 using Forum.Domain.Interfaces.Repository;
-using Forum.Domain.Models;
 
 namespace Forum.Application.Handlers
 {
@@ -54,9 +55,11 @@ namespace Forum.Application.Handlers
             };
         }
 
-        public async Task<PaginatedResponse<FullPostResponse>> GetPostsAsync(CancellationToken cancellationToken, FilterOptions? filterOptions, SortingDirection? sortingDirection, SortingOptions? sortingOptions, int pageNumber, int pageSize)
+        public async Task<PaginatedResponse<FullPostResponse>> GetPostsAsync(GetPostsQuery getPostsQuery, CancellationToken cancellationToken)
         {
-            (IEnumerable<PostView> posts, int totalCount) = await _viewPostRepository.GetPostsAsync(pageNumber, pageSize, filterOptions, sortingDirection, sortingOptions, cancellationToken);
+            var (filterOptions, sortingDirection, sortingOptions) = getPostsQuery.ToDomain();
+
+            (IEnumerable<PostView> posts, int totalCount) = await _viewPostRepository.GetPostsAsync(getPostsQuery.PageNumber, getPostsQuery.PageSize, filterOptions, sortingDirection, sortingOptions, cancellationToken);
 
             var response = posts.Select(p => new FullPostResponse
             {
@@ -80,8 +83,8 @@ namespace Forum.Application.Handlers
             {
                 Items = response,
                 TotalItems = totalCount,
-                PageNumber = pageNumber,
-                TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
+                PageNumber = getPostsQuery.PageNumber,
+                TotalPages = (int)Math.Ceiling(totalCount / (double)getPostsQuery.PageSize)
             };
 
         }

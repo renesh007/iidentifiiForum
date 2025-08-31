@@ -1,4 +1,6 @@
-﻿using Forum.Application.Interfaces;
+﻿using Forum.Application.DTO.Post.Requests;
+using Forum.Application.DTO.Post.Responses;
+using Forum.Application.Interfaces;
 using Forum.DTO.Post.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +23,19 @@ namespace Forum.Controllers
         [Route("posts")]
         public async Task<ActionResult> GetPostsAsync([FromQuery] QueryPostRequest query, CancellationToken cancellationToken)
         {
-            return Ok();
+            var getPostsQuery = new GetPostsQuery
+            {
+                PageNumber = query.PageNumber,
+                PageSize = query.PageSize,
+                Author = query.Author,
+                DateFromUtc = query.DateFromUtc,
+                DateToUtc = query.DateToUtc,
+                Tag = query.Tag,
+                SortBy = query.SortBy,
+                SortOrder = query.SortOrder
+            };
+            PaginatedResponse<FullPostResponse> posts = await _postHandler.GetPostsAsync(getPostsQuery, cancellationToken);
+            return Ok(posts);
         }
 
         [HttpGet]
@@ -29,7 +43,8 @@ namespace Forum.Controllers
         [Route("{postId}")]
         public async Task<ActionResult> GetPostByIdAsync(Guid postId, CancellationToken cancellationToken)
         {
-            return Ok();
+            FullPostResponse fullPostResponse = await _postHandler.GetPostByIdAsync(postId, cancellationToken);
+            return Ok(fullPostResponse);
         }
 
         [HttpPost]
@@ -37,7 +52,8 @@ namespace Forum.Controllers
         [Route("create")]
         public async Task<ActionResult> CreatePostAsync([FromBody] CreatePostRequest request, CancellationToken cancellationToken)
         {
-            return Ok();
+            Guid postId = _postHandler.CreatePostAsync(request.Title, request.Content, UserId, cancellationToken).Result;
+            return Ok(postId);
         }
     }
 }

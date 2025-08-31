@@ -1,5 +1,5 @@
-﻿using Forum.Application.DTO.Post.Responses;
-using Forum.Domain.Models;
+﻿using Forum.Application.DTO.Post.Requests;
+using Forum.Application.DTO.Post.Responses;
 
 namespace Forum.Application.Interfaces
 {
@@ -9,11 +9,6 @@ namespace Forum.Application.Interfaces
         public Task<Guid> CreatePostAsync(string title, string content, Guid userId, CancellationToken cancellationToken);
         public Task<FullPostResponse> GetPostByIdAsync(Guid postId, CancellationToken cancellationToken);
         public Task<PaginatedResponse<FullPostResponse>> GetPostsAsync(
-            CancellationToken cancellationToken,
-            FilterOptions? filterOptions,
-            SortingDirection? sortingDirection,
-            SortingOptions? sortingOptions,
-            int pageNumber,
-            int pageSize);
+           GetPostsQuery getPostsQuery, CancellationToken cancellationToken);
     }
 }
