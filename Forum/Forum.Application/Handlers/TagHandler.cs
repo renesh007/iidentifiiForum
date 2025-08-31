@@ -13,7 +13,7 @@ namespace Forum.Application.Handlers
             _tagRepository = tagRepository;
         }
 
-        public async Task TagPostAsync(Guid postId, string tagType, Guid userId, CancellationToken cancellationToken)
+        public async Task<Guid> TagPostAsync(Guid postId, string tagType, Guid userId, CancellationToken cancellationToken)
         {
             Guid postTagId = Guid.NewGuid();
             int result = await _tagRepository.TagPostAsync(postTagId, postId, tagType, userId, cancellationToken);
@@ -21,7 +21,7 @@ namespace Forum.Application.Handlers
             switch (result)
             {
                 case 0:
-                    return;
+                    return postTagId;
                 case 1001:
                     throw new PostNotFoundException();
                 case 1002:

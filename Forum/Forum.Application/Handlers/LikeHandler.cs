@@ -4,7 +4,6 @@ using Forum.Domain.Interfaces.Repository;
 
 namespace Forum.Application.Handlers
 {
-    ///<inheritdoc/>
     public class LikeHandler : ILikeHandler
     {
         private readonly ILikeRepository _likeService;
@@ -14,15 +13,16 @@ namespace Forum.Application.Handlers
         }
 
         ///<inheritdoc/>
-        public async Task LikePostAsync(Guid userId, Guid postId, CancellationToken cancellationToken)
+        public async Task<string> LikeOrUnlikePostAsync(Guid userId, Guid postId, CancellationToken cancellationToken)
         {
             int result = await _likeService.LikeOrUnlikePostAsync(userId, postId, cancellationToken);
 
             switch (result)
             {
                 case 0:
+                    return "Post liked.";
                 case 1:
-                    return;
+                    return "Post Unliked";
                 case 1001:
                     throw new PostNotFoundException();
                 case 1002:

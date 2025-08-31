@@ -20,8 +20,9 @@ namespace Forum.Controllers
         [Authorize]
         public async Task<ActionResult> LikePost([FromBody] LikeRequest likeRequest, CancellationToken cancellationToken)
         {
-            await _likeHandler.LikePostAsync(UserId, likeRequest.PostId, cancellationToken);
-            return Ok();
+            string response = await _likeHandler.LikeOrUnlikePostAsync(UserId, likeRequest.PostId, cancellationToken);
+
+            return Ok(new LikeResponse { PostLiked = response });
         }
     }
 }

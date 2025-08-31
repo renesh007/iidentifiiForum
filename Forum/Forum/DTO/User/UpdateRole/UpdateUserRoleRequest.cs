@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Forum.DTO.User
+namespace Forum.DTO.User.UpdateRole
 {
     public sealed class UpdateUserRoleRequest
     {
         [Required]
-        public required Guid UserId { get; set; }
+        public Guid UserId { get; set; }
 
         [Required]
-        public required int UserTypeId { get; set; }
+        public int UserTypeId { get; set; }
     }
 }

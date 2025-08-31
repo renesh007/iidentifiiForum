@@ -12,6 +12,6 @@
         /// <returns>
         /// A task representing the asynchronous operation. Completes successfully if the tag is applied. 
         /// </returns>
-        public Task TagPostAsync(Guid postId, string tagType, Guid userId, CancellationToken cancellationToken);
+        public Task<Guid> TagPostAsync(Guid postId, string tagType, Guid userId, CancellationToken cancellationToken);
     }
 }

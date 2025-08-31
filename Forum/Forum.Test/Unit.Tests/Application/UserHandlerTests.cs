@@ -54,7 +54,7 @@ namespace Forum.Test.Unit.Tests.Application
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual("token123", result.Token);
+            Assert.AreEqual("token123", result);
         }
 
         [Test]

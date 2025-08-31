@@ -19,8 +19,8 @@ namespace Forum.Controllers
         [Authorize(Roles = "Moderator")]
         public async Task<ActionResult> TagPostAsync([FromBody] TagPostRequest request, CancellationToken cancellationToken)
         {
-            await _tagHandler.TagPostAsync(request.PostId, request.TagType, UserId, cancellationToken);
-            return NoContent();
+            Guid response = await _tagHandler.TagPostAsync(request.PostId, request.TagType, UserId, cancellationToken);
+            return Ok(new TagPostResponse { PostTagId = response });
         }
     }
 }

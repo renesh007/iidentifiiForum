@@ -2,6 +2,7 @@
 using Forum.Application.DTO.Post.Responses;
 using Forum.Application.Interfaces;
 using Forum.DTO.Post.Request;
+using Forum.DTO.Post.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,7 +54,7 @@ namespace Forum.Controllers
         public async Task<ActionResult> CreatePostAsync([FromBody] CreatePostRequest request, CancellationToken cancellationToken)
         {
             Guid postId = _postHandler.CreatePostAsync(request.Title, request.Content, UserId, cancellationToken).Result;
-            return Ok(postId);
+            return Ok(new CreatePostResponse { PostId = postId });
         }
     }
 }

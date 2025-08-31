@@ -3,7 +3,7 @@
     public interface ILikeHandler
     {
         /// <summary>
-        /// Adds a like to a post for the specified user.  
+        /// Adds or Removes a like to a post for the specified user.  
         /// Validates business rules before performing the operation:
         /// - The post must exist.
         /// - The user cannot like their own post.
@@ -21,6 +21,6 @@
         /// <item><description><see cref="DuplicateLikeException"/> if the user has already liked the post (optional, depending on implementation).</description></item>
         /// </list>
         /// </returns>
-        public Task LikePostAsync(Guid userId, Guid postId, CancellationToken cancellationToken);
+        public Task<string> LikeOrUnlikePostAsync(Guid userId, Guid postId, CancellationToken cancellationToken);
     }
 }

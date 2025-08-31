@@ -1,5 +1,4 @@
-﻿using Forum.Application.DTO;
-using Forum.Application.Exceptions;
+﻿using Forum.Application.Exceptions;
 using Forum.Application.Interfaces;
 using Forum.Domain.Entities;
 using Forum.Domain.Interfaces.Repository;
@@ -22,7 +21,7 @@ namespace Forum.Application.Handlers
         }
 
         ///<inheritdoc/>    
-        public async Task<LoginResponse> LoginUserAsync(string email, string password, CancellationToken ct)
+        public async Task<string> LoginUserAsync(string email, string password, CancellationToken ct)
         {
             User user = await _userRepository.GetUserByEmailAsync(email, ct);
 
@@ -40,10 +39,7 @@ namespace Forum.Application.Handlers
 
             string token = _tokenService.GenerateToken(user.Id, user.UserType);
 
-            return new LoginResponse
-            {
-                Token = token,
-            };
+            return token;
         }
 
         ///<inheritdoc/>

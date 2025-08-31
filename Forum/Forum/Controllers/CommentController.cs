@@ -20,8 +20,9 @@ namespace Forum.Controllers
         [Authorize]
         public async Task<ActionResult> AddCommentAsync([FromBody] CommentRequest commentRequest, CancellationToken cancellationToken)
         {
-            var response = await _commentHandler.CreateCommentAsync(commentRequest.PostId, commentRequest.Content, UserId, cancellationToken);
-            return Ok(response);
+            Guid response = await _commentHandler.CreateCommentAsync(commentRequest.PostId, commentRequest.Content, UserId, cancellationToken);
+
+            return Ok(new CommentResponse { CommentId = response });
         }
     }
 }

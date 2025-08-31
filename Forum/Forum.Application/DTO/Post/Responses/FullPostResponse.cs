@@ -1,6 +1,4 @@
-﻿using Forum.Application.DTO.Comment;
-
-namespace Forum.Application.DTO.Post.Responses
+﻿namespace Forum.Application.DTO.Post.Responses
 {
     public class FullPostResponse
     {
@@ -12,5 +10,13 @@ namespace Forum.Application.DTO.Post.Responses
         public int TotalLikes { get; set; }
         public List<CommentResponse> Comments { get; set; } = new();
         public List<string> Tags { get; set; } = new List<string>();
+    }
+
+    public class CommentResponse
+    {
+        public Guid Id { get; set; }
+        public string Content { get; set; } = string.Empty;
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Forum.Application.DTO
+﻿namespace Forum.DTO.User.Login
 {
     public class LoginResponse
     {

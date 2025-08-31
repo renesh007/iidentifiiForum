@@ -31,7 +31,7 @@ namespace Forum.Test.Unit.Tests.Application
             _likeRepository.LikeOrUnlikePostAsync(_userId, _postId, _ct).Returns(0);
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await _handler.LikePostAsync(_userId, _postId, _ct));
+            Assert.DoesNotThrowAsync(async () => await _handler.LikeOrUnlikePostAsync(_userId, _postId, _ct));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Forum.Test.Unit.Tests.Application
             _likeRepository.LikeOrUnlikePostAsync(_userId, _postId, _ct).Returns(1);
 
             // Act & Assert
-            Assert.DoesNotThrowAsync(async () => await _handler.LikePostAsync(_userId, _postId, _ct));
+            Assert.DoesNotThrowAsync(async () => await _handler.LikeOrUnlikePostAsync(_userId, _postId, _ct));
             return Task.CompletedTask;
         }
 
@@ -52,7 +52,7 @@ namespace Forum.Test.Unit.Tests.Application
             _likeRepository.LikeOrUnlikePostAsync(_userId, _postId, _ct).Returns(1001);
 
             // Act & Assert
-            Assert.ThrowsAsync<PostNotFoundException>(async () => await _handler.LikePostAsync(_userId, _postId, _ct));
+            Assert.ThrowsAsync<PostNotFoundException>(async () => await _handler.LikeOrUnlikePostAsync(_userId, _postId, _ct));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Forum.Test.Unit.Tests.Application
             _likeRepository.LikeOrUnlikePostAsync(_userId, _postId, _ct).Returns(1002);
 
             // Act & Assert
-            Assert.ThrowsAsync<CannotLikeOwnPostException>(async () => await _handler.LikePostAsync(_userId, _postId, _ct));
+            Assert.ThrowsAsync<CannotLikeOwnPostException>(async () => await _handler.LikeOrUnlikePostAsync(_userId, _postId, _ct));
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Forum.Test.Unit.Tests.Application
             _likeRepository.LikeOrUnlikePostAsync(_userId, _postId, _ct).Returns(9999);
 
             // Act & Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await _handler.LikePostAsync(_userId, _postId, _ct));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await _handler.LikeOrUnlikePostAsync(_userId, _postId, _ct));
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Forum.Test.Unit.Tests.Application
             _likeRepository.LikeOrUnlikePostAsync(_userId, _postId, _ct).Returns(0);
 
             // Act
-            await _handler.LikePostAsync(_userId, _postId, _ct);
+            await _handler.LikeOrUnlikePostAsync(_userId, _postId, _ct);
 
             // Assert
             await _likeRepository.Received(1).LikeOrUnlikePostAsync(_userId, _postId, _ct);

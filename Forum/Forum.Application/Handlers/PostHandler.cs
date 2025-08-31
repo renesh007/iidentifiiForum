@@ -1,5 +1,4 @@
-﻿using Forum.Application.DTO.Comment;
-using Forum.Application.DTO.Post.Requests;
+﻿using Forum.Application.DTO.Post.Requests;
 using Forum.Application.DTO.Post.Responses;
 using Forum.Application.Exceptions;
 using Forum.Application.Interfaces;

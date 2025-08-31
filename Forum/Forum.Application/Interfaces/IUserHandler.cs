@@ -1,6 +1,4 @@
-﻿using Forum.Application.DTO;
-
-namespace Forum.Application.Interfaces
+﻿namespace Forum.Application.Interfaces
 {
     /// <summary>
     /// Defines user-related operations such as registration, authentication, and role management.
@@ -23,8 +21,8 @@ namespace Forum.Application.Interfaces
         /// <param name="email">The user's email address.</param>
         /// <param name="password">The user's password.</param>
         /// <param name="ct">Cancellation token for the operation.</param>
-        /// <returns>A <see cref="LoginResponse"/> containing authentication details.</returns>
-        public Task<LoginResponse> LoginUserAsync(string email, string password, CancellationToken ct);
+        /// <returns>A string containing authentication token.</returns>
+        public Task<string> LoginUserAsync(string email, string password, CancellationToken ct);
 
         /// <summary>
         /// Updates the role of a user to the specified user type.
