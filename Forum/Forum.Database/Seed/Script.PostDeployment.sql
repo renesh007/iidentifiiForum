@@ -75,3 +75,45 @@ BEGIN
     END;
 END;
 GO
+
+-- Seed Post: Welcome Post
+IF NOT EXISTS (SELECT 1 FROM dbo.tb_Post WHERE Id = '44444444-4444-4444-4444-444444444444')
+BEGIN
+    INSERT INTO dbo.tb_Post (Id, Title, Content, UserId, CreatedOn)
+    VALUES (
+        '44444444-4444-4444-4444-444444444444',
+        'Welcome Post',
+        'This is the first post in the system. Welcome to our platform!',
+        '11111111-1111-1111-1111-111111111111', -- Admin User
+        SYSUTCDATETIME()
+    );
+END;
+GO
+
+-- Seed Post: Moderator Guidelines
+IF NOT EXISTS (SELECT 1 FROM dbo.tb_Post WHERE Id = '55555555-5555-5555-5555-555555555555')
+BEGIN
+    INSERT INTO dbo.tb_Post (Id, Title, Content, UserId, CreatedOn)
+    VALUES (
+        '55555555-5555-5555-5555-555555555555',
+        'Moderator Guidelines',
+        'This post outlines the guidelines for moderators to follow.',
+        '22222222-2222-2222-2222-222222222222', -- Moderator User
+        SYSUTCDATETIME()
+    );
+END;
+GO
+
+-- Seed Post: User Tips
+IF NOT EXISTS (SELECT 1 FROM dbo.tb_Post WHERE Id = '66666666-6666-6666-6666-666666666666')
+BEGIN
+    INSERT INTO dbo.tb_Post (Id, Title, Content, UserId, CreatedOn)
+    VALUES (
+        '66666666-6666-6666-6666-666666666666',
+        'User Tips',
+        'Some helpful tips for regular users on how to navigate the platform.',
+        '33333333-3333-3333-3333-333333333333', -- Regular User
+        SYSUTCDATETIME()
+    );
+END;
+GO

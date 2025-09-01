@@ -60,7 +60,7 @@ namespace Forum.Application.Handlers
 
             (IEnumerable<PostView> posts, int totalCount) = await _viewPostRepository.GetPostsAsync(getPostsQuery.PageNumber, getPostsQuery.PageSize, filterOptions, sortingDirection, sortingOptions, cancellationToken);
 
-            var response = posts.Select(p => new FullPostResponse
+            List<FullPostResponse> response = posts.Select(p => new FullPostResponse
             {
                 PostId = p.PostId,
                 Title = p.Title,
