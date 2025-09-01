@@ -8,6 +8,17 @@ namespace Forum.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionHandlerMiddleware> _logger;
+        private static readonly Dictionary<Type, HttpStatusCode> ExceptionToStatusMap = new()
+        {
+            { typeof(UserNotFoundException), HttpStatusCode.NotFound },
+            { typeof(PostNotFoundException), HttpStatusCode.NotFound },
+            { typeof(EmailAlreadyExistsException), HttpStatusCode.BadRequest },
+            { typeof(UsernameAlreadyExistsException), HttpStatusCode.BadRequest },
+            { typeof(InvalidCredentialsException), HttpStatusCode.Unauthorized },
+            { typeof(CannotLikeOwnPostException), HttpStatusCode.BadRequest },
+            { typeof(TagNotFoundException), HttpStatusCode.BadRequest },
+            { typeof(DuplicateTagException), HttpStatusCode.BadRequest }
+        };
 
         public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
         {
@@ -31,56 +42,36 @@ namespace Forum.Middleware
 
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
-            string message = "An unexpected error occurred.";
-
-            switch (exception)
+            HttpStatusCode statusCode;
+            if (ExceptionToStatusMap.TryGetValue(exception.GetType(), out HttpStatusCode code))
             {
-                case UserNotFoundException:
-                    statusCode = HttpStatusCode.NotFound;
-                    message = exception.Message;
-                    break;
+                statusCode = code;
+            }
+            else
+            {
+                statusCode = HttpStatusCode.InternalServerError;
+            }
 
-                case EmailAlreadyExistsException:
-                    statusCode = HttpStatusCode.BadRequest;
-                    message = exception.Message;
-                    break;
-
-                case InvalidCredentialsException:
-                    statusCode = HttpStatusCode.Unauthorized;
-                    message = exception.Message;
-                    break;
-
-                case PostNotFoundException:
-                    statusCode = HttpStatusCode.NotFound;
-                    message = exception.Message;
-                    break;
-                case CannotLikeOwnPostException:
-                    statusCode = HttpStatusCode.BadRequest;
-                    message = exception.Message;
-                    break;
-
-                case UsernameAlreadyExistsException:
-                    statusCode = HttpStatusCode.BadRequest;
-                    message = exception.Message;
-                    break;
-
-                case TagNotFoundException:
-                    statusCode = HttpStatusCode.BadRequest;
-                    message = exception.Message;
-                    break;
+            string message;
+            if (statusCode == HttpStatusCode.InternalServerError)
+            {
+                message = "An unexpected error occurred.";
+            }
+            else
+            {
+                message = exception.Message;
             }
 
             context.Response.StatusCode = (int)statusCode;
             context.Response.ContentType = "application/json";
 
-            var response = new
+            string jsonResponse = JsonSerializer.Serialize(new
             {
                 Success = false,
                 Error = message
-            };
+            });
 
-            return context.Response.WriteAsync(JsonSerializer.Serialize(response));
+            return context.Response.WriteAsync(jsonResponse);
         }
 
     }
