@@ -4,17 +4,6 @@ A C# .NET 8 application with a test database for local development and testing.
 
 ---
 
-## Prerequisites
-
-Ensure the following are installed:
-
-- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-- [Git](https://git-scm.com/downloads)
-- [SQL Server LocalDB](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb) or another supported database engine
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/)
-
----
-
 ## Getting Started
 
 These instructions will get a copy of the project up and running on your local machine for assessment and development purposes.
@@ -22,18 +11,27 @@ These instructions will get a copy of the project up and running on your local m
 ### Prerequisites
 
 Before you begin, ensure you have the following software installed on your machine.
+* [**Git**](https://git-scm.com/downloads)
 
 * [**.NET 8 SDK**](https://dotnet.microsoft.com/download/dotnet/8.0)
 
   * The SDK is required to build and run the C# project.
 
-* [**SQL Server**](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+* [**SQL Server LocalDB**](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb) or another supported database engine
 
   * A local instance of SQL Server (e.g., SQL Server Express or LocalDB) is required to host the project's database.
 
 * [**SqlPackage CLI**](https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download?view=sql-server-ver16)
 
   * This command-line tool is used to deploy the database schema from a DACPAC file. It's often included with SQL Server Management Studio (SSMS) but can also be installed as a standalone tool.
+
+* [**Visual Studio 2022**](https://visualstudio.microsoft.com/) or [**Visual Studio Code**](https://code.visualstudio.com/)
+* SQL Server Data Tools (SSDT)
+  * Required to build the `Forum.Database` SQL Server project (`.sqlproj`), as it relies on Visual Studio targets that are not available to `dotnet build`.
+  * Go to [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+  * During installation, select SQL Server Data Tools under Desktop & Database Build Tools.
+
+* The Recommended approach is to build the solution in the **Visual Studio 2022** IDE  
 
 ### Installation
 
@@ -48,7 +46,7 @@ Follow these steps to set up the project and its database locally.
 2.  **Navigate into the project directory**
 
     ```
-    cd <project-directory-name>
+    cd iidentifiiForum\Forum
     ```
 
 3.  **Restore project dependencies**
@@ -59,7 +57,12 @@ Follow these steps to set up the project and its database locally.
 
     This command downloads and installs all the necessary NuGet packages for the solution.
 
-4.  **Database Setup**
+4. **Build the solution**
+    ```
+    dotnet build
+    ```
+
+5.  **Database Setup**
     The project uses a DACPAC (`.dacpac` file) to manage its database schema. This file contains the complete database model, which you can publish to your local SQL Server instance.
 
     To publish the database, use the `sqlpackage` tool:
