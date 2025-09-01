@@ -1,6 +1,5 @@
 # iidentifiiForum
-API and datastore backend of a web forum for a small number of users
-A C# .NET 8 application with a test database for local development and testing.
+API and datastore backend of a web forum for a small number of users. Written as a C# .NET 8 application with a test database for local development and testing.
 
 ---
 
