@@ -282,7 +282,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/Post/posts?PageNumber=&PageSize=&Author&DateFromUtc=&DateToUtc=&Tag&SortBy&SortOrder=",
+							"raw": "{{baseUrl}}/api/Post/posts?PageNumber=&PageSize=&Author&DateFromUtc=&DateToUtc=&Tag&SortBy=Likes&SortOrder=",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -318,7 +318,7 @@
 								},
 								{
 									"key": "SortBy",
-									"value": null
+									"value": "Likes"
 								},
 								{
 									"key": "SortOrder",
@@ -449,7 +449,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"postId\": \"{{postId}}\", \"tagType\": \"misle1ading\"}"
+							"raw": "{\"postId\": \"{{postId}}\", \"tagType\": \"misleading\"}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/Tag",
@@ -528,7 +528,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://localhost:38488"
+			"value": "http://localhost:5220"
 		},
 		{
 			"key": "adminToken",
