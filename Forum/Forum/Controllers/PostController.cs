@@ -24,10 +24,13 @@ namespace Forum.Controllers
         [Route("posts")]
         public async Task<ActionResult> GetPostsAsync([FromQuery] QueryPostRequest query, CancellationToken cancellationToken)
         {
+            int pageNumber = query.PageNumber ?? 1;
+            int pageSize = query.PageSize ?? 10;
+
             var getPostsQuery = new GetPostsQuery
             {
-                PageNumber = query.PageNumber,
-                PageSize = query.PageSize,
+                PageNumber = query.PageNumber ?? 1,
+                PageSize = query.PageSize ?? 10,
                 Author = query.Author,
                 DateFromUtc = query.DateFromUtc,
                 DateToUtc = query.DateToUtc,

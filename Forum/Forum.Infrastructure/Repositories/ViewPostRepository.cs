@@ -57,7 +57,7 @@ namespace Forum.Infrastructure.Repositories
 
                 string countSql = $@"
                     SELECT COUNT(DISTINCT PostId)
-                    FROM vw_PostView
+                    FROM vw_PostView p
                     {whereClause};";
 
 
