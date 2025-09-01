@@ -11,7 +11,7 @@
 			"name": "User Registration and Login",
 			"item": [
 				{
-					"name": "Register Regular User",
+					"name": "Register New Regular User",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"email\": \"user1@example.com\", \"name\": \"User One\", \"password\": \"Password123!\"}"
+							"raw": "{\"email\": \"user2@example.com\", \"name\": \"user2\", \"password\": \"user123\"}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/User/register",
@@ -65,7 +65,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"email\": \"user1@example.com\", \"password\": \"Password123!\"}"
+							"raw": "{\"email\": \"user@example.com\", \"password\": \"user123\"}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/User/login",
@@ -76,48 +76,6 @@
 								"api",
 								"User",
 								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Register & Login Moderator",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Moderator login successful\", function () {\r",
-									" pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"email\": \"mod@example.com\", \"name\": \"Moderator\", \"password\": \"Mod123!\"}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/User/register",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"User",
-								"register"
 							]
 						}
 					},
@@ -290,7 +248,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"title\": \"My First Post\", \"content\": \"This is the content of the post.\"}"
+							"raw": "{\"title\": \"My Post\", \"content\": \"jtrkbnuybqkuarkxgdkyhqmfjyspqjgoluyoptllblrpsmirjixuwtnkoifhoiryavznaomcvdduqlnqgkdbcbxpoxlccqzxukbpfdmnjtdyummophgybolzzqclwlospghcyuhplhcrqsyqdaaiphercwopsklqbgqmcesesuplqepkbuxunxllvjedspfvaiwehoinmhkkjzokuofwtnmotyktdvfqbyodubsgfcmyktwosabachhwdvsjgcjdxirufvodzzwhanchtzyfmeuojjaksmxyxzxqokisknacuqmtjlpdihwgiuhqbmxjizmyhztofiyjsliurbltcumqwzowrvzzosqzfgboyufgetpbpxlnzzhmjahryanhdvneqlzcbafgzecnwsznjosicfheonvtvclmflgxlmmxlwvqtwblgcrzsmrpgfpwvofverruwmgargtznqrduqizjknuvgksckunjkiyutpefbiamnaqcjzixefyeyqyshvwjybrvnafwjhnntlytztevvlmxcznqwvcwkigykmyhnsutrawtdsbttuenlssntzonlknyzoqjjjwxsjeqiqdckhxjapcffgmilwgvvyxnquqwnwcvpcfjfyvtabwpthictlnslyibqhkumzmlgkuozoasapkdntcdebblvqxgrxnxzssivevsxzxzjayxossegmoybjpwjsmrlychnrtjzbkyzydoinbocpixvodblplcmkkmlsjctfulsfhakuujervzccoewavcuznfuswrkaiofacadmasqspqztycpbraycxvmtkbhddhykzei\"}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/Post/create",
@@ -308,11 +266,23 @@
 				},
 				{
 					"name": "Get Posts (Paginated)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{baseUrl}}/api/Post/posts",
+							"raw": "{{baseUrl}}/api/Post/posts?PageNumber=&PageSize=&Author&DateFromUtc=&DateToUtc=&Tag&SortBy&SortOrder=",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -320,6 +290,40 @@
 								"api",
 								"Post",
 								"posts"
+							],
+							"query": [
+								{
+									"key": "PageNumber",
+									"value": ""
+								},
+								{
+									"key": "PageSize",
+									"value": ""
+								},
+								{
+									"key": "Author",
+									"value": null
+								},
+								{
+									"key": "DateFromUtc",
+									"value": ""
+								},
+								{
+									"key": "DateToUtc",
+									"value": ""
+								},
+								{
+									"key": "Tag",
+									"value": null
+								},
+								{
+									"key": "SortBy",
+									"value": null
+								},
+								{
+									"key": "SortOrder",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -445,7 +449,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"postId\": \"{{postId}}\", \"tagType\": \"misleading\"}"
+							"raw": "{\"postId\": \"{{postId}}\", \"tagType\": \"misle1ading\"}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/Tag",
