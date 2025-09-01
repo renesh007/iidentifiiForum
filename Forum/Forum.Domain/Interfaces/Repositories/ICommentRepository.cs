@@ -12,16 +12,6 @@
         /// <param name="cancellationToken">A token to monitor for cancellation requests. The operation will be canceled if the token is triggered.</param>
         /// <returns>
         /// Returns an integer code indicating the outcome of the operation:
-        /// <list type="table">
-        /// <item>
-        ///     <term>0</term>
-        ///     <description>Comment was added successfully.</description>
-        /// </item>
-        /// <item>
-        ///     <term>1001</term>
-        ///     <description>The post was not found.</description>
-        /// </item>
-        /// </list>
         /// </returns>
         public Task<int> CreateCommentAsync(Guid commentId, Guid postId, string content, Guid userId, CancellationToken cancellationToken);
     }

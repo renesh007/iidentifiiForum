@@ -13,7 +13,7 @@
         /// <param name="tagType">The type of tag to apply to the post. This value cannot be null or empty.</param>
         /// <param name="userId">The unique identifier of the user performing the tagging operation.</param>
         /// <param name="cancellationToken">A token to monitor for cancellation requests. The operation will be canceled if the token is triggered.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result contains the unique identifier of the
+        /// <returns>A task that represents the asynchronous operation and the result contains the unique identifier of the
         /// newly created tag.</returns>
         public Task<int> TagPostAsync(Guid postTagId, Guid postId, string tagType, Guid userId, CancellationToken cancellationToken);
     }
