@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0e9298d6-fffd-4636-9ef6-dea5d0f997a0",
+		"_postman_id": "a75c20be-b4e7-48bb-8255-1456ad230477",
 		"name": "Forum",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "2945774"
@@ -41,7 +41,8 @@
 										"api",
 										"Comment"
 									]
-								}
+								},
+								"description": "Adds a comment to a specific post. Requires authentication."
 							},
 							"response": [
 								{
@@ -70,10 +71,12 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/Comment",
+											"raw": "http://localhost:5220/api/Comment",
+											"protocol": "http",
 											"host": [
-												"{{baseUrl}}"
+												"localhost"
 											],
+											"port": "5220",
 											"path": [
 												"api",
 												"Comment"
@@ -123,7 +126,8 @@
 										"api",
 										"Like"
 									]
-								}
+								},
+								"description": "Add or Remove Like for a specific post. Requires authentication."
 							},
 							"response": [
 								{
@@ -152,10 +156,12 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/Like",
+											"raw": "http://localhost:5220/api/Like",
+											"protocol": "http",
 											"host": [
-												"{{baseUrl}}"
+												"localhost"
 											],
+											"port": "5220",
 											"path": [
 												"api",
 												"Like"
@@ -228,7 +234,8 @@
 													"value": "<string>"
 												}
 											]
-										}
+										},
+										"description": "Retrieves a paginated list of posts. Supports filtering by author, date range, tags, and sorting (e.g., by likes).\n\nSortOrder : ASCENDING or DECENDING (default: DECENDING)\n\nSortBy : DATE or LIKE (default: DATE)"
 									},
 									"response": [
 										{
@@ -243,10 +250,12 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/Post/posts?PageNumber=<integer>&PageSize=<integer>&Author=<string>&DateFromUtc=<dateTime>&DateToUtc=<dateTime>&Tag=<string>&SortBy=<string>&SortOrder=<string>",
+													"raw": "http://localhost:5220/api/Post/posts?PageNumber=<integer>&PageSize=<integer>&Author=<string>&DateFromUtc=<dateTime>&DateToUtc=<dateTime>&Tag=<string>&SortBy=<string>&SortOrder=<string>",
+													"protocol": "http",
 													"host": [
-														"{{baseUrl}}"
+														"localhost"
 													],
+													"port": "5220",
 													"path": [
 														"api",
 														"Post",
@@ -324,7 +333,8 @@
 													"description": "(Required) "
 												}
 											]
-										}
+										},
+										"description": "Retrieves detailed information for a specific post by its ID."
 									},
 									"response": [
 										{
@@ -339,10 +349,12 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/Post/:postId",
+													"raw": "http://localhost:5220/api/Post/:postId",
+													"protocol": "http",
 													"host": [
-														"{{baseUrl}}"
+														"localhost"
 													],
+													"port": "5220",
 													"path": [
 														"api",
 														"Post",
@@ -399,7 +411,8 @@
 												"Post",
 												"create"
 											]
-										}
+										},
+										"description": "Creates a new post with title and content. Requires authentication."
 									},
 									"response": [
 										{
@@ -428,10 +441,12 @@
 													}
 												},
 												"url": {
-													"raw": "{{baseUrl}}/api/Post/create",
+													"raw": "http://localhost:5220/api/Post/create",
+													"protocol": "http",
 													"host": [
-														"{{baseUrl}}"
+														"localhost"
 													],
+													"port": "5220",
 													"path": [
 														"api",
 														"Post",
@@ -484,7 +499,8 @@
 										"api",
 										"Tag"
 									]
-								}
+								},
+								"description": " Moderator or Admin only endpoint to mark a post with a tag."
 							},
 							"response": [
 								{
@@ -513,10 +529,12 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/Tag",
+											"raw": "http://localhost:5220/api/Tag",
+											"protocol": "http",
 											"host": [
-												"{{baseUrl}}"
+												"localhost"
 											],
+											"port": "5220",
 											"path": [
 												"api",
 												"Tag"
@@ -570,7 +588,8 @@
 												"User",
 												"register"
 											]
-										}
+										},
+										"description": "Registers a new regular user with email, name, and password."
 									},
 									"response": [
 										{
@@ -599,10 +618,12 @@
 													}
 												},
 												"url": {
-													"raw": "{{baseUrl}}/api/User/register",
+													"raw": "http://localhost:5220/api/User/register",
+													"protocol": "http",
 													"host": [
-														"{{baseUrl}}"
+														"localhost"
 													],
+													"port": "5220",
 													"path": [
 														"api",
 														"User",
@@ -666,7 +687,8 @@
 												"User",
 												"login"
 											]
-										}
+										},
+										"description": "Authenticates a user and returns a JWT token."
 									},
 									"response": [
 										{
@@ -695,10 +717,12 @@
 													}
 												},
 												"url": {
-													"raw": "{{baseUrl}}/api/User/login",
+													"raw": "http://localhost:5220/api/User/login",
+													"protocol": "http",
 													"host": [
-														"{{baseUrl}}"
+														"localhost"
 													],
+													"port": "5220",
 													"path": [
 														"api",
 														"User",
@@ -750,7 +774,8 @@
 												"User",
 												"role"
 											]
-										}
+										},
+										"description": "Admin-only endpoint to promote a regular user to a moderator role."
 									},
 									"response": [
 										{
@@ -779,10 +804,12 @@
 													}
 												},
 												"url": {
-													"raw": "{{baseUrl}}/api/User/role",
+													"raw": "http://localhost:5220/api/User/role",
+													"protocol": "http",
 													"host": [
-														"{{baseUrl}}"
+														"localhost"
 													],
+													"port": "5220",
 													"path": [
 														"api",
 														"User",
