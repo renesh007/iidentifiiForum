@@ -26,12 +26,13 @@ Before you begin, ensure you have the following software installed on your machi
   * This command-line tool is used to deploy the database schema from a DACPAC file. It's often included with SQL Server Management Studio (SSMS) but can also be installed as a standalone tool.
 
 * [**Visual Studio 2022**](https://visualstudio.microsoft.com/) or [**Visual Studio Code**](https://code.visualstudio.com/)
+  
 * SQL Server Data Tools (SSDT)
-  * Required to build the `Forum.Database` SQL Server project (`.sqlproj`), as it relies on Visual Studio targets that are not available to `dotnet build`.
+  * Required to build the `Forum.Database` SQL Server project (`.sqlproj`) if you choose to use the command line, as it relies on Visual Studio targets that are not available to `dotnet build`.
   * Go to [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
   * During installation, select SQL Server Data Tools under Desktop & Database Build Tools.
 
-* The Recommended approach is to build the solution in the **Visual Studio 2022** IDE  
+  *The Recommended approach is to build the solution in the **Visual Studio 2022** IDE  
 
 ### Installation
 
@@ -62,22 +63,20 @@ Follow these steps to set up the project and its database locally.
 ## Usage
 
 ### Build Project 
-
-From **Visual Studio 2022** IDE **Build the solution**
+Open the `.sln` file in `iidentifiiForum\Forum\Forum.sln` from **Visual Studio 2022** IDE and build the solution
 
 **Note:** The Forum.Database project may fail to build with `dotnet build` alone due to missing SSDT targets.
 To build the database project, open the solution in Visual Studio 2022 (with SSDT installed) and build it there.
 
 **Database Setup**
-The project uses a DACPAC (`.dacpac` file) to manage its database schema. This file contains the complete database model, which you can publish to your local SQL Server instance.
-
+After the solution has been built you can publish the databse locally. The project uses a DACPAC (`.dacpac` file) to manage its database schema.
 To publish the database, use the `sqlpackage` tool:
 
 ```
 sqlpackage /Action:Publish /SourceFile:"Forum.Database/bin/Debug/Forum.Database.dacpac" /TargetServerName:"(localdb)\MSSQLLocalDB" /TargetDatabaseName:"Forum"
 ```
 
-* Replace `Forum.Database/bin/Debug/Forum.Database.dacpac` with the actual path to the `.dacpac` file within the solution. It can be changed to `Forum.Database/bin/Release` or `Forum.Database/bin/Debug` depending on you build profile
+* Replace `Forum.Database/bin/Debug/Forum.Database.dacpac` with the actual path to the `.dacpac` file within the solution. It can be changed to `Forum.Database/bin/Release` or `Forum.Database/bin/Debug` depending on your build profile
 
 * Update the `/TargetServerName` if you are not using SQL Server LocalDB.
 
@@ -90,12 +89,12 @@ The default is:
     "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=Forum;Integrated Security=true;"
 }
 ```
-# Run Application
+## Run Application
 To run the project from the IDE, select the `http` run profile and ensure you have the `Forum` project selected
 
 This will start the web server. Open your web browser and navigate to `http://localhost:5520` (or the specific port listed in the console) to view the application.
 
-# Testing
+## Testing
 
 This project includes unit tests written using NUnit and Nsubstitute.  
 
@@ -105,13 +104,14 @@ dotnet test
 
 ```
 
-## A Postman Collection is avaliable in the project root directory
-```
-Forum API Integration Tests.postman_collection
-```
-### How Pre-Request and Test Scripts Work
+### Postman Collections are avaliable in the project root directory
 
-#### Pre-Request Scripts
+* `Forum API Integration Tests.postman_collection.json` can be used to with pre-populated data that exists in the seeded database. It also makes use of Pre-Request Scripts and Test Scripts (described below). 
+* `Forum.postman_collection.json` is the standard collection with no pre-populated request data.   
+
+#### How Pre-Request and Test Scripts Work
+
+##### Pre-Request Scripts
 Pre-request scripts in this collection are used to **automatically set the Authorization header** for each request based on the role required:
 
 - A mapping is maintained between endpoint paths and token variables:
@@ -128,7 +128,7 @@ This ensures that the request always uses a valid token for the correct user rol
 
 ---
 
-#### Test Scripts
+##### Test Scripts
 Test scripts are executed **after the response is received**:
 
 - They verify the **HTTP status code** (e.g., 200 OK) to ensure the request succeeded.
@@ -140,17 +140,13 @@ This allows subsequent requests to reuse values like tokens or IDs dynamically d
 
 ---
 
-By combining pre-request scripts and test scripts, the Postman collection **automates authentication and data passing between requests**, making it easy to run full integration scenarios without manual intervention.
-
----
-
-# Forum API Endpoints
+#### Forum API Endpoints
 
 Integration tests for forum API covering posts, comments, likes, moderation, filtering, and user roles.
 
 ---
 
-## User Registration and Login
+##### User Registration and Login
 
 - **Register New Regular User**  
   `POST /api/User/register`  
@@ -174,7 +170,7 @@ Integration tests for forum API covering posts, comments, likes, moderation, fil
 
 ---
 
-## Posts
+##### Posts
 
 - **Create Post**  
   `POST /api/Post/create`  
@@ -190,7 +186,7 @@ Integration tests for forum API covering posts, comments, likes, moderation, fil
 
 ---
 
-## Comments
+###### Comments
 
 - **Add Comment**  
   `POST /api/Comment`  
@@ -198,15 +194,15 @@ Integration tests for forum API covering posts, comments, likes, moderation, fil
 
 ---
 
-## Likes
+##### Likes
 
 - **Like Post**  
   `POST /api/Like`  
-  Likes a specific post. Requires authentication.
+  Add or Remove Like for a specific post. Requires authentication.
 
 ---
 
-## Moderation
+##### Moderation
 
 - **Tag Post as Misleading**  
   `POST /api/Tag`  
@@ -256,9 +252,3 @@ This table contains initial Posts that are used to populate the database on a fr
 | Welcome Post | This is the first post in the system. Welcome to our platform! | 11111111-1111-1111-1111-111111111111 (Admin) |
 | Moderator Guidelines | This post outlines the guidelines for moderators to follow. | 22222222-2222-2222-2222-222222222222 (Moderator) |
 | User Tips | Some helpful tips for regular users on how to navigate the platform. | 33333333-3333-3333-3333-333333333333 (User) |
-
-
-
-
-
-
