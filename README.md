@@ -61,6 +61,8 @@ Follow these steps to set up the project and its database locally.
     ```
     dotnet build
     ```
+    **Note:** The Forum.Database project may fail to build with dotnet build alone due to missing SSDT targets.
+    To build the database project, open the solution in Visual Studio 2022 (with SSDT installed) and build it there.
 
 5.  **Database Setup**
     The project uses a DACPAC (`.dacpac` file) to manage its database schema. This file contains the complete database model, which you can publish to your local SQL Server instance.
@@ -68,10 +70,10 @@ Follow these steps to set up the project and its database locally.
     To publish the database, use the `sqlpackage` tool:
 
     ```
-    sqlpackage /Action:Publish /SourceFile:"path/to/your/Forum.Database.dacpac" /TargetServerName:"(localdb)\MSSQLLocalDB" /TargetDatabaseName:"Forum"
+    sqlpackage /Action:Publish /SourceFile:"Forum.Database/bin/Debug/Forum.Database.dacpac" /TargetServerName:"(localdb)\MSSQLLocalDB" /TargetDatabaseName:"Forum"
     ```
 
-    * Replace `path/to/your/Forum.Database.dacpac` with the actual path to the `.dacpac` file within the solution.
+    * Replace `Forum.Database/bin/Debug/Forum.Database.dacpac` with the actual path to the `.dacpac` file within the solution. It can be changed to `Forum.Database/bin/Release` or `Forum.Database/bin/Debug` depending on you build profile
 
     * Update the `/TargetServerName` if you are not using SQL Server LocalDB.
 
@@ -91,7 +93,7 @@ Follow these steps to set up the project and its database locally.
 
 To run the project, execute the following command from the project's root directory:
 ```
-dotnet run
+dotnet run --project src/Forum/Forum.csproj
 ```
 This will start the web server. Open your web browser and navigate to `http://localhost:5520` (or the specific port listed in the console) to view the application.
 
